@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.robin.task.mapper.TaskMapper">
+    <insert id="insertTask" parameterType="Task">
+        insert into task(task_title, task_content, task_level_id, task_nature_id, task_status, task_pre_finished_date, task_start_date, task_finish_date)
+        values (#{taskTitle}, #{taskContent}, #{taskLevelId}, #{taskNatureId}, #{taskStatus}, #{taskPreFinishedDate}, #{taskStartDate}, #{taskFinishDate})
+    </insert>
+
+    <update id="updateTask" parameterType="Task">
+        update task
+        <set>
+            <if test="task_title != null and task_title != ''">task_title = #{taskTitle},</if>
+            <if test="task_content != null and task_content != ''">task_content = #{taskContent},</if>
+            <if test="task_level_id != null and task_level_id != ''">task_level_id=#{taskLevelId},</if>
+            <if test="task_nature_id != null and task_nature_id != ''">task_nature_id=#{taskNatureId},</if>
+            <if test="task_status != null and task_status != ''">task_status = #{taskStatus},</if>
+            <if test="task_pre_finished_date != null and task_pre_finished_date != ''">task_pre_finished_date = #{taskPreFinishedDate},</if>
+        </set>
+        where task_id = #{taskId}
+    </update>
+
+    <delete id="deleteTask" parameterType="int">
+        delete from task where task_id = #{id}
+    </delete>
+
+    <resultMap id="getTask" type="Task">
+        <id property="taskId" column="task_id" />
+        <result property="taskTitle" column="task_title" />
+        <result property="taskContent" column="task_content" />
+        <result property="taskStatus" column="task_status" />
+        <result property="taskPreFinishedDate" column="task_pre_finished_date" />
+        <result property="taskStartDate" column="task_start_date" />
+        <result property="taskFinishDate" column="task_finish_date" />
+        <association property="taskLevel" javaType="TaskLevel">
+            <id property="taskLevelId" column="task_level_id" />
+            <result property="taskLevelName" column="task_level_name" />
+        </association>
+        <association property="taskNature" javaType="TaskNature">
+            <id property="taskNatureId" column="task_nature_id" />
+            <result property="taskNatureName" column="task_nature_name" />
+        </association>
+    </resultMap>
+
+    <select id="findAllTask" resultMap="getTask">
+        select task.*, tl.task_level_name, tn.task_nature_name
+        from task, task_level tl, task_nature tn
+        where  task.task_level_id = tl.task_level_id and task.task_nature_id = tn.task_nature_id
+    </select>
+
+
+</mapper>

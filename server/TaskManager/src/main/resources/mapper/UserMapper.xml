@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robin.task.mapper.UserMapper">
+    <select id="isExistNickName" parameterType="String" resultType="int">
+        select count(id) from user
+        where nick_name = #{nickName}
+    </select>
+
+    <select id="isExistUserName" parameterType="String" resultType="int">
+        select count(id) from user
+        where username = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user(username, password, nick_name, email)
+        values (#{username}, #{password}, #{nickName}, #{email})
+    </insert>
+
+    <select id="findUser" parameterType="String" resultType="int">
+        select count(id) from user
+        where username = #{username} and password = #{password}
+    </select>
+
+</mapper>
