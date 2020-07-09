@@ -5,19 +5,20 @@
 <mapper namespace="com.robin.task.mapper.TaskMapper">
     <insert id="insertTask" parameterType="Task">
         insert into task(task_title, task_content, task_level_id, task_nature_id, task_status, task_pre_finished_date, task_start_date, task_finish_date)
-        values (#{taskTitle}, #{taskContent}, #{taskLevelId}, #{taskNatureId}, #{taskStatus}, #{taskPreFinishedDate}, #{taskStartDate}, #{taskFinishDate})
+        values (#{taskTitle}, #{taskContent}, #{taskLevel.taskLevelId}, #{taskNature.taskNatureId}, #{taskStatus}, #{taskPreFinishedDate}, #{taskStartDate}, #{taskFinishDate})
     </insert>
 
     <update id="updateTask" parameterType="Task">
         update task
-        <set>
-            <if test="task_title != null and task_title != ''">task_title = #{taskTitle},</if>
-            <if test="task_content != null and task_content != ''">task_content = #{taskContent},</if>
-            <if test="task_level_id != null and task_level_id != ''">task_level_id=#{taskLevelId},</if>
-            <if test="task_nature_id != null and task_nature_id != ''">task_nature_id=#{taskNatureId},</if>
-            <if test="task_status != null and task_status != ''">task_status = #{taskStatus},</if>
-            <if test="task_pre_finished_date != null and task_pre_finished_date != ''">task_pre_finished_date = #{taskPreFinishedDate},</if>
-        </set>
+        <trim prefix="set" suffixOverrides=",">
+            <if test="taskTitle != null and taskTitle != ''">task_title=#{taskTitle},</if>
+            <if test="taskContent != null and taskContent != ''">task_content=#{taskContent},</if>
+            <if test="taskLevel.taskLevelId != null and taskLevel.taskLevelId != ''">task_level_id=#{taskLevel.taskLevelId},</if>
+            <if test="taskNature.taskNatureId != null and taskNature.taskNatureId != ''">task_nature_id=#{taskNature.taskNatureId},</if>
+            <if test="taskStatus != null and taskStatus != ''">task_status=#{taskStatus},</if>
+            <if test="taskPreFinishedDate != null">task_pre_finished_date=#{taskPreFinishedDate},</if>
+            <if test="taskFinishDate != null">task_finish_date=#{taskFinishDate},</if>
+        </trim>
         where task_id = #{taskId}
     </update>
 

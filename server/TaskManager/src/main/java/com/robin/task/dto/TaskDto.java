@@ -7,11 +7,15 @@ import java.util.Date;
 
 
 public class TaskDto {
+
     private String taskTitle;
     private String taskContent;
     private Integer taskLevelId;
     private Integer taskNatureId;
+    private Integer taskStatus;
     private Date taskPreFinishedDate;
+    private Date taskStartDate;
+    private Date taskFinishDate;
 
 
     public String getTaskTitle() {
@@ -54,6 +58,30 @@ public class TaskDto {
         this.taskPreFinishedDate = taskPreFinishedDate;
     }
 
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Date getTaskStartDate() {
+        return taskStartDate;
+    }
+
+    public void setTaskStartDate(Date taskStartDate) {
+        this.taskStartDate = taskStartDate;
+    }
+
+    public Date getTaskFinishDate() {
+        return taskFinishDate;
+    }
+
+    public void setTaskFinishDate(Date taskFinishDate) {
+        this.taskFinishDate = taskFinishDate;
+    }
+
     @Override
     public String toString() {
         return "TaskDto{" +
@@ -61,7 +89,10 @@ public class TaskDto {
                 ", taskContent='" + taskContent + '\'' +
                 ", taskLevelId=" + taskLevelId +
                 ", taskNatureId=" + taskNatureId +
-                ", taskPreFinishedDate='" + taskPreFinishedDate + '\'' +
+                ", taskStatus=" + taskStatus +
+                ", taskPreFinishedDate=" + taskPreFinishedDate +
+                ", taskStartDate=" + taskStartDate +
+                ", taskFinishDate=" + taskFinishDate +
                 '}';
     }
 }

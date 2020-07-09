@@ -15,10 +15,6 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskMapper taskMapper;
 
-    @Override
-    public int insertDate(Date date) {
-        return taskMapper.insertDate(date);
-    }
 
     @Override
     public int insertTask(Task task) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface TaskService {
 
-    int insertDate(Date date);
 
     int insertTask(Task task);
 

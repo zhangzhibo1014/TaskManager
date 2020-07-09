@@ -23,4 +23,11 @@ public class TaskLevel {
         this.taskLevelName = taskLevelName;
     }
 
+    @Override
+    public String toString() {
+        return "TaskLevel{" +
+                "taskLevelId=" + taskLevelId +
+                ", taskLevelName='" + taskLevelName + '\'' +
+                '}';
+    }
 }

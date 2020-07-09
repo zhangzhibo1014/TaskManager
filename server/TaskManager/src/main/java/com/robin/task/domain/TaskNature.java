@@ -22,4 +22,12 @@ public class TaskNature {
     public void setTaskNatureName(String taskNatureName) {
         this.taskNatureName = taskNatureName;
     }
+
+    @Override
+    public String toString() {
+        return "TaskNature{" +
+                "taskNatureId=" + taskNatureId +
+                ", taskNatureName='" + taskNatureName + '\'' +
+                '}';
+    }
 }
