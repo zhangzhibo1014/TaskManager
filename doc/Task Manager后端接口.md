@@ -58,7 +58,7 @@
 #### 获取所有任务
 
 ```
-接口地址：/task
+接口地址：zhangzb.qicp.vip/task
 请求方式：get
 参数：
 	None
@@ -67,7 +67,7 @@
 #### 添加任务
 
 ```
-接口地址：/task
+接口地址：zhangzb.qicp.vip/task
 请求方式：post
 参数：
     taskTitle（任务标题）
@@ -80,7 +80,7 @@
 #### 修改任务
 
 ```
-接口地址：/task/update
+接口地址：zhangzb.qicp.vip/task/update
 请求方式：post
 参数：
 	taskId（任务id）
@@ -96,9 +96,87 @@
 #### 删除任务
 
 ```
-接口地址：/task/delete
+接口地址：zhangzb.qicp.vip/task/delete
 请求方式：post
 参数：
 	id(要删除的任务id)
+```
+
+### 任务等级
+
+#### 查询任务等级
+
+```
+接口地址：zhangzb.qicp.vip/taskLevel
+请求方式：get
+参数：
+	None
+```
+
+#### 添加任务等级
+
+```
+接口地址：zhangzb.qicp.vip/taskLevel
+请求方式：post
+参数：
+	taskLevelName（任务等级名称）
+```
+
+#### 修改任务等级
+
+```
+接口地址：zhangzb.qicp.vip/taskLevel/update
+请求方式：post
+参数：
+	taskLevelId（任务等级ID）
+	taskLevelName（任务等级名称）
+```
+
+#### 删除任务等级
+
+```
+接口地址：zhangzb.qicp.vip/taskLevel/update
+请求方式：post
+参数：
+	taskLevelId(任务等级ID)
+```
+
+### 任务性质
+
+#### 查询任务性质
+
+```
+接口地址：zhangzb.qicp.vip/taskNature
+请求方式：get
+参数：
+	None
+```
+
+#### 添加任务性质
+
+```
+接口地址：zhangzb.qicp.vip/taskNature
+请求方式：post
+参数：
+	taskNatureName(任务性质名称)
+```
+
+#### 修改任务性质
+
+```
+接口地址：zhangzb.qicp.vip/taskNature/update
+请求方式：post
+参数：
+	taskNatureId(任务性质ID)
+	taskNatureName(任务性质名称)
+```
+
+#### 删除任务性质
+
+```
+接口地址：zhangzb.qicp.vip/taskNature/delete
+请求方式：post
+参数：
+	taskNatureId(任务性质ID)
 ```
 
