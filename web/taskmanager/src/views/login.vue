@@ -23,10 +23,11 @@
         <!-- 注册对话框 -->
          <el-dialog
               :close-on-click-modal="false"
-              :title="title"
+              title='用户注册'
               :visible.sync="addDialogVisible"
               width="500px"
               @closed="addUserDialogClodsed"
+              style="margin-top:10vh"
             >
                 <el-form :model= "addUsersForm" :rules="addUsers" ref="addUsersRef" label-width="100px" >
                     <el-form-item label="用户名称:" prop="userName">
@@ -55,24 +56,26 @@
 </template>
 
 <script>
-// import qs from 'qs'
+import axios from 'axios'
+import Qs from 'qs'
 export default {
   data () {
     // 自定义用户名验证规则
-    // var checkUserName = (rule, value, callback) => {
-    //   const regUser = /^[A-Za-z\u4e00-\u9fa50-9]+$/
-    //   if (regUser.test(value)) {
-    //     // 合法
-    //     return callback()
-    //   }
-    //   callback(new Error('用户名可输入数字、字母和中文字符'))
-    // }
-    var isExistUserName = async (rule, value, callback) => {
-      const { data: res } = await this.$http.post('/isExistUserName', value)
-      if (res.code === 200) {
+    var checkUserName = (rule, value, callback) => {
+      const regUser = /^[A-Za-z\u4e00-\u9fa50-9]+$/
+      if (regUser.test(value)) {
+        // 合法
         return callback()
       }
+      callback(new Error('用户名可输入数字、字母和中文字符'))
+    }
+    var isExistUserName = async (rule, value, callback) => {
+      const { data: res } = await this.$http.post('/isExistUserName', {username:value})
+      if (res.code === 10000) {
+        return callback()
+      }else{
       callback(new Error('用户名重复，请重新输入'))
+      }
     }
     // 自定义名用户密码验证规则
     var checkpassword = (rule, value, callback) => {
@@ -158,26 +161,50 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
         const { data: res } = await this.$http.post('/login', this.loginForm)
-        if (res.code !== 100) return this.$message.error(res.message)
+        if (res.code !== 100) {return this.$message.error(res.message)}else{
+          this.$http.push('/index')
+        }
       })
+      // this.$router.push('/index')
     },
-    register () {
-      this.addDialogVisible = true
+  register () {
+      // var nickName = 123
+              // 前后端传输转码
+    //     var params = new URLSearchParams()
+    //     params.append('nickName', '123')
+    // this.$http.post('/isExistNickName', {nickName:123})
+      
+      axios({
+          url: 'http://zhangzb.qicp.vip/isExistNickName',
+          method: 'post',
+          transformRequest: [function (data) {
+              // 对 data 进行任意转换处理
+              return Qs.stringify(data)
+          }],
+          headers: {
+              'deviceCode': 'A95ZEF1-47B5-AC90BF3'
+          },
+          data: {
+             nickName: 'admin'
+          }
+      })
+      // this.addDialogVisible = true
     },
-    addUser () {
+    
+    addUser () {    
       this.$refs.addUsersRef.validate(async valid => {
         if (!valid) return
         // 确认用户名是否重复
-        const { data: resA } = await this.$http.get('/isExistUserName', this.loginForm.userName)
-        if (resA.code !== 100) {
+        const { data: resA } = await this.$http.post('/isExistUserName', this.loginForm.userName)
+        if (resA.code !== 10000) {
           return this.$message.error('请求失败！')
         }
         if (resA.data !== true) {
           return this.$message.error(resA.message)
         }
         // 确认昵称是否重复
-        const { data: resB } = await this.$http.get('/isExistNickName', this.loginForm.nickName)
-        if (resB.code !== 100) {
+        const { data: resB } = await this.$http.post('/isExistNickName', this.loginForm.nickName)
+        if (resB.code !== 10000) {
           return this.$message.error('请求失败！')
         }
         if (resB.data !== true) {
@@ -188,7 +215,7 @@ export default {
         }
         // 发起注册用户的网络请求
         const { data: res } = await this.$http.post('/user/add', this.addUsersForm)
-        if (res.code !== 100) {
+        if (res.code !== 10000) {
           return this.$message.error('注册用户失败')
         }
         this.$message.success('注册用户成功')
@@ -198,15 +225,15 @@ export default {
     },
     // 邮箱验证
     async getCode () {
-      // if (!this.addUsersForm.nickName) {
-      //   return this.$message.error('请输入用户昵称！')
-      // }
+      if (!this.addUsersForm.nickName) {
+        return this.$message.error('请输入用户昵称！')
+      }
       var sendData = {}
       // sendData.nickName = this.addUsersForm.nickName
       sendData.email = this.addUsersForm.email
-      // const postData = qs.pa({
-      //   email: this.addUsersForm.email
-      // })
+      const postData = qs.pa({
+        email: this.addUsersForm.email
+      })
       const { data: res } = await this.$http.get('/checkEmail', JSON.stringify(sendData))
       this.addUsersForm.code = res.data.code
     }
@@ -216,9 +243,9 @@ export default {
 
 <style lang="less" scoped>
 .login-container{
-    background-color: #2b4b6b;
-    height: 100%;
-    background-image: url('../assets/img/login-bg.jpg');
+    width: 100%;
+    height: 970px;
+    background: url('../assets/img/login-bg.jpg') no-repeat;
     background-size: 100% 100%;
 }
 .login-box{
