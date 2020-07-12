@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robin.task.mapper.TaskLevelMapper">
+
+    <select id="findAllTaskLevel" resultType="com.robin.task.domain.TaskLevel">
+        select *
+        from task_level
+    </select>
+
+    <insert id="insertTaskLevel" parameterType="TaskLevel">
+        insert into task_level(task_level_name)
+        values (#{taskLevelName})
+    </insert>
+
+    <update id="updateTaskLevel" parameterType="TaskLevel">
+        update task_level
+        <trim prefix="set" suffixOverrides=",">
+            <if test="taskLevelName != null and taskLevelName != ''">
+                task_level_name = #{taskLevelName}
+            </if>
+        </trim>
+        where task_level_id = #{taskLevelId}
+    </update>
+
+    <delete id="deleteTaskLevel" parameterType="int">
+        delete from task_level where task_level_id = #{id}
+    </delete>
+
+</mapper>

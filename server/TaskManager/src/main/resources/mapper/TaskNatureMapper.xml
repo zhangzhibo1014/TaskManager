@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.robin.task.mapper.TaskNatureMapper">
+    <select id="findAllTaskNature" resultType="TaskNature">
+        select * from task_nature
+    </select>
+
+    <insert id="insertTaskNature" parameterType="TaskNature">
+        insert into task_nature (task_nature_name)
+        values (#{taskNatureName})
+    </insert>
+
+    <update id="updateTaskNature" parameterType="TaskNature">
+        update task_nature
+        <trim prefix="set" suffixOverrides=",">
+            <if test="taskNatureName != null and taskNatureName != ''">
+                task_nature_name=#{taskNatureName}
+            </if>
+        </trim>
+        where task_nature_id = #{taskNatureId}
+    </update>
+
+    <delete id="deleteTaskNature" parameterType="int">
+        delete from task_nature
+        where task_nature_id = #{id}
+    </delete>
+</mapper>

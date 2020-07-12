@@ -1,6 +1,5 @@
 package com.robin.task.domain;
 
-import java.util.List;
 
 public class TaskNature {
 

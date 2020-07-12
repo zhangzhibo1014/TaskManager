@@ -30,10 +30,13 @@ public class TaskController {
 
 
     @GetMapping("/task")
-    public List<Task> finAll() {
-        List<Task> tasks = new ArrayList<>();
-        tasks = taskService.findAllTask();
-        return tasks;
+    public Result finAll() {
+        List<Task> tasks = taskService.findAllTask();
+        if (tasks != null) {
+            return Result.ok("查询任务成功").put("tasks", tasks);
+        } else {
+            return Result.error(20000, "查询任务失败");
+        }
     }
 
 
